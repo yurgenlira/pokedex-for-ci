@@ -12,3 +12,6 @@ jobs:
     - name: echo the message
       run: |
         echo "Hola mundo!"
+    - name: imprimir fecha
+      run: date
+    - run: ls -l 
