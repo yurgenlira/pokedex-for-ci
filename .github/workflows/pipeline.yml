@@ -1,14 +1,14 @@
-name: Deployment pipeline
+name: Deployment Pipeline
 
 on:
   push:
-    branches: 
-    - main
+    branches: [main]
   pull_request:
     branches: [main]
     types: [opened, synchronize]
 
 jobs:
+
   avoid_redundancy:
     runs-on: ubuntu-20.04
     steps:
@@ -16,12 +16,18 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }}
+  
   lint:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 14
+    - name: install dependences
+      run: npm ci
     - name: Lint
       run: npm run eslint
 
